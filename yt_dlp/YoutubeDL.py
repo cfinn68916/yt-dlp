@@ -2021,6 +2021,23 @@ class YoutubeDL:
         self.to_screen(f'[download] Downloading {ie_result["_type"]}: {title}')
 
         all_entries = PlaylistEntries(self, ie_result)
+        x=list(all_entries.get_requested_items())
+        x.sort(key=lambda z:z[0])
+        x=[y[1] for y in x]
+        os.mkdir(common_info['playlist'])
+        name=common_info['playlist']
+        f=open(f"{name}/{name}","w")
+        f.write("#EXTM3U\n")
+        f.write("#EXTENC:UTF-8\n")
+        f.write(f"#PLAYLIST:{name}\n")
+        for i in x:
+            namewillbe=f"{i['title']} [{i['id']}].opus"
+            namewillbe=namewillbe.replace("/","⧸")
+            dur=i['duration']*1000
+            f.write(f"#EXTINF:{dur},{i['title']}\n")
+            f.write(f"#EXTALB:{i['channel']}\n")
+            f.write("./"+namewillbe+"\n")
+        f.close()
         entries = orderedSet(all_entries.get_requested_items(), lazy=True)
 
         lazy = self.params.get('lazy_playlist')
