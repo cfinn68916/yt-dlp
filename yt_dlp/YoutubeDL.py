@@ -2024,6 +2024,7 @@ class YoutubeDL:
         x=list(all_entries.get_requested_items())
         x.sort(key=lambda z:z[0])
         x=[y[1] for y in x]
+        #TODO: make this better
         os.mkdir(common_info['playlist'])
         name=common_info['playlist']
         f=open(f"{name}/{name}","w")
@@ -2032,7 +2033,7 @@ class YoutubeDL:
         f.write(f"#PLAYLIST:{name}\n")
         for i in x:
             namewillbe=f"{i['title']} [{i['id']}].opus"
-            namewillbe=namewillbe.replace("/","⧸")
+            namewillbe=namewillbe.replace("/","⧸").replace("\"","＂")
             dur=i['duration']*1000
             f.write(f"#EXTINF:{dur},{i['title']}\n")
             f.write(f"#EXTALB:{i['channel']}\n")
