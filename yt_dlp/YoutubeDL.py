@@ -2032,6 +2032,8 @@ class YoutubeDL:
         f.write("#EXTENC:UTF-8\n")
         f.write(f"#PLAYLIST:{name}\n")
         for i in x:
+            if i['title']=="[Private video]":
+                continue
             namewillbe=f"{i['title']} [{i['id']}].opus"
             namewillbe=namewillbe.replace("/","⧸").replace("\"","＂")
             dur=i['duration']*1000
