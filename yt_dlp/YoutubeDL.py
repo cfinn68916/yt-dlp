@@ -2025,22 +2025,18 @@ class YoutubeDL:
         x.sort(key=lambda z:z[0])
         x=[y[1] for y in x]
         #TODO: make this better
-        os.mkdir(common_info['playlist'])
         name=common_info['playlist']
-        f=open(f"{name}/{name}","w")
-        f.write("#EXTM3U\n")
-        f.write("#EXTENC:UTF-8\n")
-        f.write(f"#PLAYLIST:{name}\n")
+        f=open(f"{ie_result['id']}","w")
+        f.write(f"{name}")
         for i in x:
             if i['title']=="[Private video]":
                 continue
-            namewillbe=f"{i['title']} [{i['id']}].opus"
-            namewillbe=namewillbe.replace("/","⧸").replace("\"","＂")
+            namewillbe=i['id']
+#            namewillbe=namewillbe.replace("/","⧸").replace("\"","＂").replace("?","？")
             dur=i['duration']*1000
-            f.write(f"#EXTINF:{dur},{i['title']}\n")
-            f.write(f"#EXTALB:{i['channel']}\n")
-            f.write("./"+namewillbe+"\n")
+            f.write(f"\n{i['title']}\n{dur}\n{namewillbe}")
         f.close()
+        return
         entries = orderedSet(all_entries.get_requested_items(), lazy=True)
 
         lazy = self.params.get('lazy_playlist')
